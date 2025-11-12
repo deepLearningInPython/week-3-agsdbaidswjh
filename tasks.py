@@ -16,8 +16,9 @@ import numpy as np
 # -----------------------------------------------
 
 def compute_output_size_1d(input_array, kernel_array):
-    pass
-
+    convolution_len = len(input_array) - len(kernel_array) + 1
+    
+    return convolution_len
 
 # -----------------------------------------------
 # Example:
@@ -37,7 +38,11 @@ print(compute_output_size_1d(input_array, kernel_array))
 def convolve_1d(input_array, kernel_array):
     # Tip: start by initializing an empty output array (you can use your function above to calculate the correct size).
     # Then fill the cells in the array with a loop.
-    pass
+    convoultion_array = np.zeros(compute_output_size_1d(input_array, kernel_array))
+    for i in range(len(convoultion_array)):
+        convoultion_array[i] = input_array[i:i+len(kernel_array)] @ kernel_array
+    
+    return convoultion_array
 
 # -----------------------------------------------
 # Another tip: write test cases like this, so you can easily test your function.
@@ -56,8 +61,10 @@ print(convolve_1d(input_array, kernel_array))
 # -----------------------------------------------
 
 def compute_output_size_2d(input_matrix, kernel_matrix):
-    pass
-
+    convolution_dims = (input_matrix.shape[0] - kernel_matrix.shape[0] + 1,
+                        input_matrix.shape[1] - kernel_matrix.shape[1] + 1)
+    
+    return convolution_dims
 
 # -----------------------------------------------
 
@@ -72,7 +79,11 @@ def compute_output_size_2d(input_matrix, kernel_matrix):
 def convolute_2d(input_matrix, kernel_matrix):
     # Tip: same tips as above, but you might need a nested loop here in order to
     # define which parts of the input matrix need to be multiplied with the kernel matrix.
-    pass
-
+    convolution_matrix = np.zeros(compute_output_size_2d(input_matrix, kernel_matrix))
+    for i in range(convolution_matrix.shape[0]):
+        for j in range(convolution_matrix.shape[1]):
+            convolution_matrix[i, j] = np.sum(input_matrix[i:i+kernel_matrix.shape[0], 
+                                                           j:j+kernel_matrix.shape[1]] * kernel_matrix)
+    return convolution_matrix
 
 # -----------------------------------------------
